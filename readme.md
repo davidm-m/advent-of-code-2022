@@ -21,6 +21,12 @@ Each day normally has three parts: one to transform the puzzle input to some use
 of the day's puzzle, and one to solve the second. XQuery files for these are in each day's numbered folder. These files
 are intended to be run directly through the query console.
 
+To start, add your puzzle input to the database at the URL /<day>/input.txt
+
+Then run the transform script, which will turn the puzzle input into XML stored at /day/data.xml
+
+Finally, run the puzzle scripts. These will output the puzzle solution in the query console.
+
 ## Development
 While the query console has some hinting and autocompletion, it's a bit slow and not ideal for developing in. I use
 IntelliJ with the "XQuery Support + MarkLogic Debugger" plugin, which provides support for 1.0-ml XQuery language features.
