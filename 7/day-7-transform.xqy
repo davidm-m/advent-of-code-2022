@@ -27,8 +27,14 @@ declare function local:process-line($lines, $filesystem, $working-directory) {
       else local:process-line($lines[2 to fn:count($lines)], $filesystem, $working-directory)
     else
       if (fn:starts-with($lines[1], "dir "))
-      then local:process-line($lines[2 to fn:count($lines)], mem:node-insert-child(local:get-current-directory-node($filesystem, $working-directory), <folder><name>{fn:substring-after($lines[1], "dir ")}</name></folder>), $working-directory)
-      else local:process-line($lines[2 to fn:count($lines)], mem:node-insert-child(local:get-current-directory-node($filesystem, $working-directory), <file><name>{fn:substring-after($lines[1], " ")}</name><size>{fn:substring-before($lines[1], " ")}</size></file>), $working-directory)
+      then
+        if (fn:empty(local:get-current-directory-node($filesystem, $working-directory)/folder[name = fn:substring-after($lines[1], "dir ")]))
+        then local:process-line($lines[2 to fn:count($lines)], mem:node-insert-child(local:get-current-directory-node($filesystem, $working-directory), <folder><name>{fn:substring-after($lines[1], "dir ")}</name></folder>), $working-directory)
+        else local:process-line($lines[2 to fn:count($lines)], $filesystem, $working-directory)
+      else
+        if (fn:empty(local:get-current-directory-node($filesystem, $working-directory)/file[name = fn:substring-after($lines[1], " ")]))
+        then local:process-line($lines[2 to fn:count($lines)], mem:node-insert-child(local:get-current-directory-node($filesystem, $working-directory), <file><name>{fn:substring-after($lines[1], " ")}</name><size>{fn:substring-before($lines[1], " ")}</size></file>), $working-directory)
+        else local:process-line($lines[2 to fn:count($lines)], $filesystem, $working-directory)
 };
 
 let $puzzle-input := fn:doc("/7/input.txt")
