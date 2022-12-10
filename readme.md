@@ -27,6 +27,9 @@ Then run the transform script, which will turn the puzzle input into XML stored 
 
 Finally, run the puzzle scripts. These will output the puzzle solution in the query console.
 
+Starting some days in, scripts will have a `$TEST` variable at the top. Setting this to true switches to transforming a
+test input (for transform scripts) or running the solution on this test document (for puzzle scripts).
+
 ## Development
 While the query console has some hinting and autocompletion, it's a bit slow and not ideal for developing in. I use
 IntelliJ with the "XQuery Support + MarkLogic Debugger" plugin, which provides support for 1.0-ml XQuery language features.
